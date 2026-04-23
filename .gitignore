@@ -1,0 +1,64 @@
+# =============================================================================
+# Python
+# =============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+.installed.cfg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# =============================================================================
+# Project-specific generated data
+# =============================================================================
+
+# Run artifacts produced by the webapp and benchmarking scripts
+webapp_runs/
+
+# Cleaned CSV exports
+csv_puliti/
+
+# Experiment result files
+risultati esperimenti/
+
+# Generated plot outputs
+comparison_plot.html
+confronto.png
+
+# Temporary debug files from the regex generator
+debug_regex_compile.txt
+
+# Thesis PDF (large binary, share separately)
+*.pdf
+
+# =============================================================================
+# IDEs and editors
+# =============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Claude/Antigravity agent files
+.claude/
+
+# =============================================================================
+# OS
+# =============================================================================
+.DS_Store
+Thumbs.db
+desktop.ini

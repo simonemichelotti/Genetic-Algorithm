@@ -1,0 +1,255 @@
+/* Usa Inter come font dell'app - font moderno per UI */
+body {
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: #121212;
+  color: #e6e6e6;
+  font-size: 14px; /* smaller base font for most UI text (excludes title) */
+}
+
+/* Modifica pesi e spaziatura degli heading */
+h1 { font-weight: 700; letter-spacing: -0.5px; font-size: 2.2rem; } /* mantieni titolo grande */
+h3 { font-weight: 700; font-size: 1.25rem; } /* aumentato per 'Risultati' */
+h4 { font-weight: 600; font-size: 1.1rem; }
+h5 { font-weight: 600; font-size: 1.15rem; margin-bottom: 0.5rem; } /* aumentato per 'Carica dataset', 'Parametri', 'Informazioni esecuzione', 'Rappresentazione Grafica' */
+
+/* Assicura che bottoni e label usino lo stesso font UI */
+.btn, .form-label, .list-group-item, .form-control, .form-range, label {
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.95rem; /* leggermente più piccolo del body per compattezza */
+}
+
+/* Mantieni monospace per le etichette dei nodi del grafo per chiarezza (vis-network usa monospace in JS) */
+/* lascia monospace di default dove impostato da JS */
+
+/* Tema scuro */
+body { background: #121212; color: #e6e6e6; }
+label, h1, h3, h4, h5, p { color: #e6e6e6; }
+.container { color: #e6e6e6; }
+#graph { 
+  background: #1e1e1e; 
+  border-radius: 6px; 
+  height: 400px; 
+  min-height: 400px; 
+}
+.list-group-item { background: #171717; color: #ddd; border: 1px solid #222; }
+.btn-outline-light { color: #ddd; border-color: #ccc; }
+.btn-outline-light:hover { color: #fff; background: #333; }
+.btn-success { background-color: #2ecc71; border-color: #27ae60; }
+.form-control, .form-range { background: #1b1b1b; border: 1px solid #333; color: #eee }
+.form-check-label { color: #ddd }
+
+/* Rendi i placeholder leggibili sul tema scuro */
+.form-control::placeholder { color: #c9c9c9; opacity: 1 }
+
+/* Assicura che gli input disabilitati restino leggibili (es: dopo upload dataset) */
+.form-control:disabled, .form-control[disabled] { background-color: #1b1b1b; color: #ddd; opacity: 1 }
+
+/* Schiarisci testo e placeholder degli input file su tema scuro */
+input[type=file] { color: #eee }
+
+/* Rendi leggibili le etichette dei range */
+.form-range { filter: none }
+
+/* Badge fallback per automa derivato da AST */
+.fallback-badge {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  padding: 4px 8px;
+  background: rgba(255,255,255,0.03);
+  color: #ffd966;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+#graphError { color: #ff6b6b; font-weight: 600; }
+
+/* Badge LIVE usato quando il grafo viene aggiornato in tempo reale */
+.live-badge {
+  position: absolute;
+  left: 12px;
+  top: 8px;
+  padding: 4px 8px;
+  background: rgba(46, 204, 113, 0.12); /* verde chiaro traslucido */
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.25);
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 21;
+  pointer-events: none;
+  font-weight: 600;
+}
+
+/* Dimensioni container del grafico: più piccolo per layout impilato */
+.chart-container {
+  min-height: 240px;  /* aumentato da 180 */
+  max-height: 340px;  /* aumentato da 260 */
+  position: relative;
+}
+
+/* Assicura che il canvas del grafico riempia il container */
+.chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Mantieni altezza compatta per il grafo (sotto il grafico) */
+#graph {
+  min-height: 220px;
+  max-height: 320px;
+  margin-top: 12px;
+}
+
+/* Layout dei controlli del grafico (sotto il grafico) */
+.chart-controls {
+  margin-top: 8px;
+  justify-content: flex-start;
+}
+
+/* Controlli del grafo: posizionali sotto il grafo e allineati a sinistra */
+.graph-controls {
+  margin-top: 12px;   /* un po' di spazio sotto il grafo */
+  justify-content: flex-start;
+}
+
+/* Piccola correzione visiva per bottoni outline scuri */
+.chart-controls .btn-outline-light {
+  color: #ddd;
+  border-color: rgba(255,255,255,0.12);
+}
+.graph-controls .btn-outline-light {
+  color: #ddd;
+  border-color: rgba(255,255,255,0.12);
+}
+.graph-controls .btn-outline-primary {
+  color: #cfe9ff;
+  border-color: rgba(255,255,255,0.14);
+}
+
+/* Spaziatura tra bottone "Ottieni risultati" e lista Top 10 */
+#topList {
+  margin-top: 0.5rem; /* piccolo spazio ma sufficiente */
+}
+
+/* Piccola spaziatura tra "Ottieni risultati" (in #runInfo) e Top 10 */
+#runInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem; /* spaziatura verticale tra i figli di runInfo */
+}
+
+/* assicura che il bottone risultati abbia un po' di spazio sotto quando presente */
+#runInfo .btn-success {
+  margin-bottom: 0.4rem;
+}
+
+/* Responsività (grafico sopra grafo su tutte le larghezze) */
+@media (min-width: 768px) {
+  /* Nessun layout affiancato per questa sezione; impilamento forzato dalle col */
+}
+
+/* Bottoni icona: rendi SVG inline coerenti e visibili */
+.icon-btn svg {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  display: inline-block;
+  fill: currentColor; /* usa colore testo del bottone */
+}
+
+/* Aumenta leggermente area cliccabile e centra SVG */
+.icon-btn {
+  padding: 0.4rem 0.55rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Stato disabilitato mostra colore attenuato (Bootstrap mantiene stile outline) */
+.icon-btn:disabled svg {
+  opacity: 0.5;
+}
+
+/* Mantieni stile scuro esistente per bottoni outline */
+.btn-outline-light.icon-btn { color: #ddd; border-color: rgba(255,255,255,0.12); }
+
+/* Stile card per tema scuro */
+.card {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 6px;
+}
+
+.card-header {
+  background: #0f0f0f;
+  border-bottom: 1px solid #333;
+  padding: 1rem;
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+/* Stile visualizzazione pattern */
+#patternCode {
+  color: #2ecc71;
+  font-size: 1.1em;
+  word-break: break-all;
+}
+
+/* Stile alert per tema scuro */
+.alert-success {
+  background: rgba(46, 204, 113, 0.1);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+  color: #2ecc71;
+}
+
+.alert-success code {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 8px;
+}
+
+/* Stile bottone info */
+.btn-info {
+  background-color: #3498db;
+  border-color: #2980b9;
+  color: #fff;
+}
+
+.btn-info:hover {
+  background-color: #2980b9;
+  border-color: #1f618d;
+}
+
+/* Forza testo status/dataset generato in bianco anche con classi Bootstrap */
+#generateStatus {
+  color: #ffffff !important;
+}
+
+/* Rendi il blocco pattern generato e le sue statistiche bianche */
+#generatedPattern,
+#generatedPattern .alert-success,
+#generatedPattern .alert-success code,
+#patternStats,
+#patternCode {
+  color: #ffffff !important;
+}
+
+/* Mantieni sfondo/contrasto leggibile per codice evidenziato: sfondo ma testo bianco */
+#generatedPattern .alert-success {
+  background: rgba(255,255,255,0.03) !important;
+  border-color: rgba(255,255,255,0.06) !important;
+}
+
+/* Se vuoi ancora evidenziare il pattern code, usa verde chiaro ma testo bianco */
+#patternCode {
+  background: rgba(46,204,113,0.06);
+  padding: 2px 6px;
+  border-radius: 4px;
+}

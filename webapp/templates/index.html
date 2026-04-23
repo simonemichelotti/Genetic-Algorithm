@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Regex GA WebUI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css" />
+
+    <!-- Added: Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body class="p-4">
+    <div class="container">
+      <h1>Algoritmo Genetico🧬</h1>
+
+      <div class="row mt-4">
+        <!-- LEFT COLUMN: Dataset Generation + Upload + Parameters -->
+        <div class="col-12 col-md-6">
+          <!-- NEW SECTION: Generate Dataset -->
+          <div class="card mb-4" style="background: #1a1a1a; border: 1px solid #333;">
+            <div class="card-header" style="background: #0f0f0f; border-bottom: 1px solid #333;">
+              <h5 style="margin: 0;">Genera Dataset</h5>
+            </div>
+            <div class="card-body">
+              <p class="small mb-3 text-white">Genera una regex casuale e popola automaticamente le cartelle con 1000 tracce buone e 1000 cattive.</p>
+              <button id="generateDatasetBtn" class="btn btn-info w-100 mb-2">Genera Dataset</button>
+              <div id="generateStatus" class="small mt-2"></div>
+              <div id="generatedPattern" class="alert alert-success mt-3" style="display:none; word-break: break-all;">
+                <strong>Regex Generata:</strong>
+                <code id="patternCode" style="font-size: 1.1em;"></code>
+                <br><small id="patternStats" class="mt-2"></small>
+              </div>
+            </div>
+          </div>
+
+          <h5>Carica dataset manualmente</h5>
+          <div class="mb-3">
+            <label class="form-label">Tracce buone</label>
+            <input type="file" class="form-control" id="goodFiles" multiple accept=".txt" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Tracce cattive</label>
+            <input type="file" class="form-control" id="badFiles" multiple accept=".txt" />
+          </div>
+          <div class="mb-3">
+            <button id="uploadBtn" class="btn btn-secondary">Carica dataset</button>
+            <span id="uploadStatus" class="ms-2"></span>
+          </div>
+
+          <h5>Parametri Evoluzione</h5>
+          <div class="mb-3">
+            <label class="form-label">Popolazione: <span id="popSizeLabel">50</span></label>
+            <input type="range" class="form-range" id="popSize" min="10" max="1000" step="1" value="50" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Generazioni: <span id="gensLabel">50</span></label>
+            <input type="range" class="form-range" id="gens" min="1" max="500" value="50" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Prob. mutazione: <span id="mutLabel">0.3</span></label>
+            <input type="range" class="form-range" id="mut" min="0" max="1" step="0.01" value="0.3" />
+          </div>
+          <!-- Elitismo rimosso: non più usato nell'algoritmo -->
+          <div class="mb-3 form-check">
+            <input class="form-check-input" type="checkbox" id="permissive" />
+            <label class="form-check-label" for="permissive">Crossover permissivo</label>
+          </div>
+
+          <button id="startBtn" class="btn btn-primary">Avvia Evoluzione</button>
+          <button id="stopBtn" class="btn btn-danger" disabled>Ferma</button>
+        </div>
+
+        <!-- RIGHT COLUMN: Run Info + Top Chromosomes -->
+        <div class="col-12 col-md-6">
+          <h5>Informazioni esecuzione</h5>
+          <div id="runInfo">
+            <p>Nessuna esecuzione avviata.</p>
+          </div>
+
+          <h5>Top 10 Cromosomi</h5>
+          <ul id="topList" class="list-group mt-3">
+          </ul>
+        </div>
+      </div>
+
+      <hr />
+
+      <div id="resultsSection" style="display:none">
+        <h3>Risultati</h3>
+
+        <div class="row g-3">
+          <div class="col-12">
+            <h5>Evoluzione fitness</h5>
+            <div class="chart-container">
+              <canvas id="fitnessChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Sezione rappresentazione grafica automi rimossa -->
+        </div>
+      </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+  </body>
+</html>
