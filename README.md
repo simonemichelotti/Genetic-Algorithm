@@ -5,9 +5,10 @@
 ![Flask](https://img.shields.io/badge/Flask-3.x-lightgrey?logo=flask)
 ![Lark](https://img.shields.io/badge/Parser-LALR(1)-orange)
 
-A research project developed as part of a Bachelor's thesis in Computer Science.
+A research project developed as part of a **Bachelor's thesis in Computer Science**.
 It implements a **genetic algorithm (GA) that automatically synthesises regular
-expressions** from sets of positive and negative example strings.
+expressions** from sets of positive and negative example strings — no manual crafting
+required.
 
 The system evolves a population of candidate regex patterns over successive
 generations, using **AST-level crossover and mutation** operators, a composite
@@ -20,20 +21,15 @@ local Ollama model.
 
 | Feature | Description |
 |---|---|
-| **AST-based operators** | Crossover and mutation work directly on the parse tree, preserving syntactic validity |
+| **AST-based operators** | Crossover and mutation work directly on the parse tree, preserving syntactic validity at every step |
 | **Composite fitness** | Accuracy on traces + structural penalties (wildcards, nested quantifiers) + literal bonuses |
 | **Hybrid initialisation** | Optionally seeds part of the population with LLM-generated candidates (`phi3:mini` via Ollama) |
-| **Interactive webapp** | Flask UI to configure runs, upload datasets, monitor per-generation progress, and inspect the best regex AST and DFA |
+| **Interactive webapp** | Flask UI to configure runs, upload datasets, monitor per-generation progress, and inspect the best regex AST and its minimised DFA |
 | **Benchmarking suite** | Automated multi-run experiments comparing Classic GA, Hybrid GA, and a standalone LLM baseline |
 | **LALR(1) parser** | Custom Lark grammar for regex → AST and AST → regex round-tripping |
 
 ---
 
-## 🏗️ Architecture
-
-```
-AG_Tesi/
-├── evolutionary_engine/        # Core GA loop
 │   └── engine.py               # Initialisation, fitness, selection, crossover, mutation
 ├── syntactic_representation/   # Regex ↔ AST translation layer
 │   ├── ast_generator.py        # LALR(1) parser (Lark): regex string → AST
@@ -62,11 +58,10 @@ and [`docs/pipeline.md`](docs/pipeline.md).
 ## ⚙️ Installation
 
 **Requirements:** Python 3.10+
-
 ```bash
 # 1. Clone the repository
-git clone https://github.com/<your-username>/AG_Tesi.git
-cd AG_Tesi
+git clone https://github.com/simonemichelotti/Genetic-Algorithm.git
+cd Genetic-Algorithm
 
 # 2. Create and activate a virtual environment
 python -m venv venv
@@ -141,7 +136,7 @@ Initialise population (random regex or LLM-seeded)
 └─► For each generation:
        │
        ├─ Evaluate fitness:
-       │     accuracy on good/bad traces
+       │     accuracy on positive/negative traces
        │   + structural penalty (wildcards, nested quantifiers, …)
        │   + literal bonus
        │
@@ -151,7 +146,7 @@ Initialise population (random regex or LLM-seeded)
        │
        ├─ Mutate offspring:
        │     char substitution │ escape-class change │ quantifier toggle
-       │     domain-bias injection (literal 'ab' alternation)
+       │     domain-bias injection (literal alternation)
        │
        └─ Replace population; repeat until convergence or max generations
 ```
@@ -173,7 +168,3 @@ and exploitation.
 | `plotly` | Interactive charts for benchmarking results |
 
 ---
-
-## 📄 License
-
-This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
