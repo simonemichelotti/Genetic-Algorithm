@@ -5,15 +5,10 @@
 ![Flask](https://img.shields.io/badge/Flask-3.x-lightgrey?logo=flask)
 ![Lark](https://img.shields.io/badge/Parser-LALR(1)-orange)
 
-A research project developed as part of a **Bachelor's thesis in Computer Science**.
-It implements a **genetic algorithm (GA) that automatically synthesises regular
-expressions** from sets of positive and negative example strings — no manual crafting
-required.
+A research project developed as part of a **Bachelor's thesis in Computer Science**.  
+It implements a **genetic algorithm (GA) that automatically synthesises regular expressions** from sets of positive and negative example strings — no manual crafting required.
 
-The system evolves a population of candidate regex patterns over successive
-generations, using **AST-level crossover and mutation** operators, a composite
-fitness function, and optional **LLM-assisted warm-start initialisation** via a
-local Ollama model.
+The system evolves a population of candidate regex patterns over successive generations, using **AST-level crossover and mutation** operators, a composite fitness function, and optional **LLM-assisted warm-start initialisation** via a local Ollama model.
 
 ---
 
@@ -30,6 +25,29 @@ local Ollama model.
 
 ---
 
+## 🖥️ Web Application
+
+The project ships with a full-featured Flask web interface that makes it easy to run the genetic algorithm without touching the command line.
+
+### Dataset Panel & Results
+
+Generate a random dataset automatically or upload your own positive/negative trace files. After the run completes, the top-10 candidate regex patterns are shown with their fitness scores.
+
+![Dataset panel and top-10 results](docs/screenshots/Screenshot1.png)
+
+### Evolution Parameters & Live Fitness Chart
+
+Tune population size, number of generations, mutation probability, and crossover mode via interactive sliders. The live chart plots the best-fitness value at every generation in real time.
+
+![Evolution parameters and live fitness chart](docs/screenshots/Screenshot2.png)
+
+---
+
+## 📁 Project Structure
+
+```
+Genetic-Algorithm/
+├── evolutionary_engine/        # Core GA logic
 │   └── engine.py               # Initialisation, fitness, selection, crossover, mutation
 ├── syntactic_representation/   # Regex ↔ AST translation layer
 │   ├── ast_generator.py        # LALR(1) parser (Lark): regex string → AST
@@ -45,19 +63,21 @@ local Ollama model.
 │   ├── app.py                  # REST API + background run management
 │   ├── templates/              # Jinja2 HTML templates
 │   └── static/                 # CSS / JS assets
-└── docs/                       # Extended documentation
-    ├── architecture.md
-    └── pipeline.md
+├── docs/                       # Extended documentation & screenshots
+│   ├── architecture.md
+│   ├── pipeline.md
+│   └── screenshots/
+└── tests/                      # Unit tests
 ```
 
-For a detailed walkthrough of each module see [`docs/architecture.md`](docs/architecture.md)
-and [`docs/pipeline.md`](docs/pipeline.md).
+For a detailed walkthrough of each module see [`docs/architecture.md`](docs/architecture.md) and [`docs/pipeline.md`](docs/pipeline.md).
 
 ---
 
 ## ⚙️ Installation
 
 **Requirements:** Python 3.10+
+
 ```bash
 # 1. Clone the repository
 git clone https://github.com/simonemichelotti/Genetic-Algorithm.git
@@ -74,8 +94,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-> **Optional – LLM hybrid mode:** install [Ollama](https://ollama.com/) and pull
-> the model used during experiments:
+> **Optional – LLM hybrid mode:** install [Ollama](https://ollama.com/) and pull the model used during experiments:
 > ```bash
 > ollama pull phi3:mini
 > ```
@@ -109,8 +128,7 @@ python -m evolutionary_engine.engine
 python -m evolutionary_engine.engine --ibrido
 ```
 
-Positive and negative traces are read from `tracce_buone/` and `tracce_cattive/`
-folders in the working directory (one trace per `.txt` file).
+Positive and negative traces are read from `tracce_buone/` and `tracce_cattive/` folders in the working directory (one trace per `.txt` file).
 
 ### 3. Benchmarking Suite
 
@@ -151,8 +169,7 @@ Initialise population (random regex or LLM-seeded)
        └─ Replace population; repeat until convergence or max generations
 ```
 
-Mutation probability decays **linearly** over generations to balance exploration
-and exploitation.
+Mutation probability decays **linearly** over generations to balance exploration and exploitation.
 
 ---
 
@@ -168,3 +185,7 @@ and exploitation.
 | `plotly` | Interactive charts for benchmarking results |
 
 ---
+
+## 📄 License
+
+This project is released under the [MIT License](LICENSE).
